@@ -1,6 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://c5cs7kf2gg4ve"]
+[gd_scene load_steps=7 format=3 uid="uid://c5cs7kf2gg4ve"]
 
 [ext_resource type="Script" path="res://scripts/helicopter_1.gd" id="1_vx4ux"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_u2uuy"]
+properties/0/path = NodePath(".:_auth_peer_id")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vx4ux"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_4opa5"]
 
@@ -11,21 +24,16 @@ albedo_color = Color(1, 0.364706, 0.0901961, 1)
 radius = 0.8
 height = 2.809
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vx4ux"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath(".:_auth_peer_id")
-properties/2/spawn = true
-properties/2/replication_mode = 1
-
 [node name="Helicopter1" type="Node3D" node_paths=PackedStringArray("action_area", "_multiplayer_synchronizer")]
 script = ExtResource("1_vx4ux")
 action_area = NodePath("body/Area3D")
 _multiplayer_synchronizer = NodePath("MultiplayerSynchronizer")
+
+[node name="AuthSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_u2uuy")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_vx4ux")
 
 [node name="body" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
@@ -45,9 +53,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.465899, -0.025969, 0.05858
 
 [node name="Gunner2" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.446994, -0.025969, 0.635576)
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_vx4ux")
 
 [connection signal="body_entered" from="body/Area3D" to="." method="_on_rigid_body_3d_body_entered"]
 [connection signal="body_exited" from="body/Area3D" to="." method="_on_area_3d_body_exited"]

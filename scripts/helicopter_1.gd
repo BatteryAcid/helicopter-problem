@@ -17,7 +17,7 @@ func _ready():
 	player_spawn_point = get_tree().current_scene.find_child("PlayerSpawnPoint")
 
 func _physics_process(delta):
-	if is_multiplayer_authority() && pilot: # Update position if we are authority and have a pilot set
+	if _multiplayer_synchronizer.is_multiplayer_authority() && pilot: # Update position if we are authority and have a pilot set
 		global_position = pilot.global_position # synch position to player's position
 		global_transform.basis = _pilot_model.global_transform.basis
 	else:
@@ -28,9 +28,11 @@ func _physics_process(delta):
 
 # This is the auth_peer_id setter
 func _update_auth_peer_id(peer_id: int):
-	print("update auth peer %s, %s" % [peer_id, multiplayer.get_unique_id()])
+	# TODO: this is repeatedly called on some or all peers, may update to OnChange? 
+	#print("update auth peer %s, %s" % [peer_id, multiplayer.get_unique_id()])
 	_auth_peer_id = peer_id
-	set_multiplayer_authority(_auth_peer_id, true) # only use true on the recursive param if necessary
+	_multiplayer_synchronizer.set_multiplayer_authority(_auth_peer_id)
+	#set_multiplayer_authority(_auth_peer_id)#, true) # only use true on the recursive param if necessary
 
 # Access from any peer, need to be able to call locally if we're on a host (call_local).
 # TODO: not sure if this should be called only on the authority (rpc_id) or on all peers
