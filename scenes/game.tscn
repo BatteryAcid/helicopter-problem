@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://c7jxb55veskqd"]
+[gd_scene load_steps=32 format=3 uid="uid://c7jxb55veskqd"]
 
 [ext_resource type="PackedScene" uid="uid://btjx4a4g25xj3" path="res://scenes/network/multiplayer_manager.tscn" id="1_sg3yj"]
 [ext_resource type="PackedScene" uid="uid://58bbdf2xo31b" path="res://scenes/world/env/campfire_logs.tscn" id="2_t2yqu"]
@@ -24,6 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://btlc2d0qp6vmp" path="res://scenes/world/env/rock_tallI.tscn" id="17_f5p1n"]
 [ext_resource type="PackedScene" uid="uid://c3g7rtn5vs3g2" path="res://scenes/world/env/grass.tscn" id="18_x0re1"]
 [ext_resource type="PackedScene" uid="uid://ch0liofjsn16v" path="res://asssets/world/env/stone_smallF.glb" id="19_5ilbo"]
+[ext_resource type="Script" path="res://scripts/craft_input_manager.gd" id="26_bhx41"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_unvu4"]
 sky_top_color = Color(0.431373, 0.721569, 0.933333, 1)
@@ -546,3 +547,15 @@ mesh = SubResource("PlaneMesh_lpk0h")
 shape = SubResource("ConcavePolygonShape3D_m5eq6")
 
 [node name="PlayerSpawnPoint" type="Node3D" parent="World"]
+
+[node name="CraftSpawner" type="MultiplayerSpawner" parent="World"]
+_spawnable_scenes = PackedStringArray("res://scenes/world/aircraft/helicopter1.tscn")
+spawn_path = NodePath("../CraftSpawnPoint")
+
+[node name="CraftSpawnPoint" type="Node3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.76634, 2.52382, -3.13832)
+
+[node name="CraftInputManager" type="Node" parent="." node_paths=PackedStringArray("craft_spawn_point", "player_spawn_point")]
+script = ExtResource("26_bhx41")
+craft_spawn_point = NodePath("../World/CraftSpawnPoint")
+player_spawn_point = NodePath("../World/PlayerSpawnPoint")
