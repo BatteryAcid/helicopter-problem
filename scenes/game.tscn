@@ -24,7 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://btlc2d0qp6vmp" path="res://scenes/world/env/rock_tallI.tscn" id="17_f5p1n"]
 [ext_resource type="PackedScene" uid="uid://c3g7rtn5vs3g2" path="res://scenes/world/env/grass.tscn" id="18_x0re1"]
 [ext_resource type="PackedScene" uid="uid://ch0liofjsn16v" path="res://asssets/world/env/stone_smallF.glb" id="19_5ilbo"]
-[ext_resource type="Script" path="res://scripts/craft_input_manager.gd" id="26_bhx41"]
+[ext_resource type="Script" uid="uid://cw5oasnq1i33q" path="res://scripts/craft_input_manager.gd" id="26_bhx41"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_unvu4"]
 sky_top_color = Color(0.431373, 0.721569, 0.933333, 1)

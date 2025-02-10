@@ -6,6 +6,9 @@
 properties/0/path = NodePath(".:_auth_peer_id")
 properties/0/spawn = true
 properties/0/replication_mode = 2
+properties/1/path = NodePath(".:_player_controlled")
+properties/1/spawn = true
+properties/1/replication_mode = 2
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vx4ux"]
 properties/0/path = NodePath(".:position")
@@ -24,10 +27,11 @@ albedo_color = Color(1, 0.364706, 0.0901961, 1)
 radius = 0.8
 height = 2.809
 
-[node name="Helicopter1" type="Node3D" node_paths=PackedStringArray("action_area", "_multiplayer_synchronizer")]
+[node name="Helicopter1" type="Node3D" node_paths=PackedStringArray("action_area", "_multiplayer_synchronizer", "_auth_synchronizer")]
 script = ExtResource("1_vx4ux")
 action_area = NodePath("body/Area3D")
 _multiplayer_synchronizer = NodePath("MultiplayerSynchronizer")
+_auth_synchronizer = NodePath("AuthSynchronizer")
 
 [node name="AuthSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_u2uuy")
